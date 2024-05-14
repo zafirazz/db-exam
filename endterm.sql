@@ -75,14 +75,15 @@ select workshop_id, count(c_id) as num_of_repairs
     order by num_of_repairs desc;
     
 --list the name of car owners who have never owned an opel car
-select o.o_name
-    from carmechanic.m_owner o join carmechanic.m_owns ow
-        on o.o_id = ow.owner_id
-    join carmechanic.m_car c
-        on ow.car_id = c.c_id
-    join carmechanic.m_car_model cm
-        on c.model_id = cm.cm_id
-    where cm.make not like 'Opel%';
+select o_name
+    from carmechanic.m_owner
+    where o_id in
+        (select owner_id
+            from carmechanic.m_owns join carmechanic.m_car
+                on car_id = c_id
+            join carmechanic.m_car_model
+                on model_id = cm_id
+            where make not like 'Opel');
     
 select o_name
 from carmechanic.m_owner
@@ -95,7 +96,7 @@ from carmechanic.m_car_model
 join carmechanic.m_car on model_id = cm_id
 where make = 'Opel');
 
-select o_name
+select distinct o_name
     from carmechanic.m_owner
         where o_id not in
             (select o.owner_id
