@@ -381,6 +381,14 @@ create table work_plan (
 alter table m_mechanic
     add bonus number(6) check (bonus >= 2000);
 
+--6. delete evaluation data of cars with a license plate number not consisting of exactly 6
+--chars
+delete from m_car_evaluation
+    where car_id in
+        (select c_id 
+            from m_car
+            where length(license_plate_number) != 6);
+
 --6. Delete the phone column from m_mechanic
 alter table m_mechanic drop column phone;
 
@@ -397,7 +405,7 @@ alter table m_owns
     drop primary key;
 
 --9. Delete tables m_works for and m_mechanic. Take into accout the fk refs these tables
---you may use multip;e statements to solve this task
+--you may use multiple statements to solve this task
 drop table m_works cascade constraints purge;
 drop table m_mechanic cascade constraints purge;
 
