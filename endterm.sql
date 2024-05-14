@@ -493,14 +493,14 @@ where car_id in (
 --days since the start of the repair multiplied by 10% of the first sell price.
 update m_repair
 set end_date = sysdate,
-repair_cost = (sysdate - start_date) * 0.1 * (select license_plate_number
+repair_cost = (sysdate - start_date) * 0.1 * (select first_sell_price
 from m_car)
 where end_date is null
 and workshop_id in
     (select w_id
         from m_workshop 
         where w_name like 'Kerekes%')
-and repair_cost is null;
+and repair_cost is null; --unnecessary
 
 
 --20. The youngest mechanic moves in to the oldest. Update the address of the youngest
