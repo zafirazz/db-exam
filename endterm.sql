@@ -68,11 +68,11 @@ select license_plate_number, price
 --1.List the identifier of all workshops and the number of repairs in each workshop.
 --Workshops with no repaires should also be included. 
 --Sort the result descending by the number of repairs.
-select w.w_id, count(r.workshop_id) as number_of_repairs
-    from carmechanic.m_workshop w left join carmechanic.m_repair r
-        on w.w_id = r.workshop_id
-    group by w.w_id
-    order by number_of_repairs desc;
+select workshop_id, count(c_id) as num_of_repairs
+    from carmechanic.m_car left join carmechanic.m_repair
+        on c_id = car_id
+    group by workshop_id
+    order by num_of_repairs desc;
     
 --list the name of car owners who have never owned an opel car
 select o.o_name
