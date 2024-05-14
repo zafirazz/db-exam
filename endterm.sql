@@ -392,6 +392,15 @@ delete from m_car_evaluation
 --6. Delete the phone column from m_mechanic
 alter table m_mechanic drop column phone;
 
+-- delete abc201 all past and all present ownership
+delete from m_owns
+    where car_id in
+        (select c_id
+            from m_car
+            where license_plate_number = 'ABC201');
+delete from m_car
+    where license_plate_number = 'ABC201';
+
 --7. Delete the table m_owner and m_owns. Take into account the fk ref these tables
 --you may use multiple statements to solve this take
 drop table m_owner cascade constraints purge; 
