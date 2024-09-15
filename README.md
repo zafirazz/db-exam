@@ -1,2 +1,2 @@
-# db-exam
+# Database lab exam practice
 
